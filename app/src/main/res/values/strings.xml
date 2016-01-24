@@ -1,0 +1,30 @@
+<resources>
+    //Name
+    <string name="app_name">TabletopCompanion</string>
+    //Titles
+    <string name="title_activity_main">MainMenu</string>
+    <string name="title_activity_dice">Dice Tool</string>
+
+    //Generic Button
+    <string name="button_Ok">Ok</string>
+    <string name="button_Cancel">Cancel</string>
+    <string name="button_Back">Back</string>
+
+    //Main Activity
+    <string name="button_Dice">Dice</string>
+    <string name="button_Measurement">Measuring Tool</string>
+    <string name="button_Tracker">Game Tracker</string>
+    <string name="button_Close">Close</string>
+
+    //Dice Activity
+    <string name="textView_DiceType">Dice Type:</string>
+    <string name="textView_NumDice">Number of dice:</string>
+
+    <string name="radioB_GreaterThan">Greater Than</string>
+    <string name="radioB_LessThan">Less Than</string>
+
+    <string name="button_Roll">Roll Dice</string>
+    <string name="button_Reset">Reset</string>
+    <string name="button_Discard">Discard</string>
+
+</resources>
