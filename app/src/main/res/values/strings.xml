@@ -20,6 +20,10 @@
     <string name="textView_DiceType">Dice Type:</string>
     <string name="textView_NumDice">Number of dice:</string>
 
+    <string name="edText_DiceType">0</string>
+    <string name="edText_NumDice">0</string>
+    <string name="edText_NumFilter">0</string>
+
     <string name="radioB_GreaterThan">Greater Than</string>
     <string name="radioB_LessThan">Less Than</string>
 

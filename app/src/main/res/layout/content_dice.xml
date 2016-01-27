@@ -19,20 +19,30 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/textView_NumDice"
         android:id="@+id/numDiceTextV"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/textView_DiceType"
-        android:id="@+id/diceTypeTextV"
-        android:layout_below="@+id/numDiceTextV"
+        android:layout_alignBottom="@+id/numDiceEdTxt"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp"/>
+        android:layout_alignParentTop="true"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textAlignment="gravity"/>
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/textView_DiceType"
+    android:id="@+id/diceTypeTextV"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/numDiceTextV"
+    android:layout_alignBottom="@+id/diceTypeEdTxt"
+    android:layout_toLeftOf="@+id/diceTypeEdTxt"
+    android:layout_toStartOf="@+id/diceTypeEdTxt"
+    android:textSize="25dp"
+    android:textStyle="bold"
+    android:textAlignment="gravity"/>
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,10 +50,12 @@
         android:inputType="number"
         android:ems="4"
         android:id="@+id/numDiceEdTxt"
-        android:layout_above="@+id/diceTypeEdTxt"
-        android:layout_alignRight="@+id/rollButton"
-        android:layout_alignEnd="@+id/rollButton"
-        android:maxLength="2"/>
+        android:maxLength="3"
+        android:text="@string/edText_NumDice"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/filterNumEdTxt"
+        android:layout_toStartOf="@+id/filterNumEdTxt"
+        android:gravity="right"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -51,55 +63,74 @@
         android:inputType="number"
         android:ems="4"
         android:id="@+id/diceTypeEdTxt"
-        android:layout_above="@+id/rollButton"
-        android:layout_toRightOf="@+id/diceTypeTextV"
-        android:layout_toEndOf="@+id/diceTypeTextV"
-        android:maxLength="2"/>
+        android:maxLength="2"
+        android:text="@string/edText_DiceType"
+        android:layout_below="@+id/numDiceEdTxt"
+        android:layout_alignLeft="@+id/numDiceEdTxt"
+        android:layout_alignStart="@+id/numDiceEdTxt"
+        android:gravity="right"/>
 
-    <Button
+    <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_Roll"
-        android:id="@+id/rollButton"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/diceTypeTextV"
-        android:layout_toRightOf="@+id/numDiceTextV"
-        android:layout_toEndOf="@+id/numDiceTextV"/>
+        android:text="@string/radioB_LessThan"
+        android:id="@+id/lessThanRadioB"
+        android:layout_above="@+id/discardButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="36dp"/>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/radioB_GreaterThan"
+        android:id="@+id/greaterThanRadioB"
+        android:layout_alignTop="@+id/lessThanRadioB"
+        android:layout_toRightOf="@+id/lessThanRadioB"
+        android:layout_toEndOf="@+id/lessThanRadioB"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="4"
+        android:maxLength="3"
+        android:id="@+id/filterNumEdTxt"
+        android:layout_alignTop="@+id/greaterThanRadioB"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/edText_NumFilter"
+        android:gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_Discard"
         android:id="@+id/discardButton"
-        android:layout_below="@+id/rollButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="120dp"/>
+        android:layout_alignTop="@+id/rollButton"
+        android:layout_toLeftOf="@+id/rollButton"
+        android:layout_toStartOf="@+id/rollButton"/>
 
-    <RadioGroup
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/discardButton"
-        android:layout_toRightOf="@+id/numDiceTextV"
-        android:layout_toEndOf="@+id/numDiceTextV">
+        android:text="@string/button_Roll"
+        android:id="@+id/rollButton"
+        android:layout_marginTop="108dp"
+        android:layout_below="@+id/diceTypeTextV"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radioB_LessThan"
-            android:id="@+id/lessThanRadioB"
-            android:layout_alignBottom="@+id/discardButton"
-            android:layout_alignRight="@+id/rollButton"
-            android:layout_alignEnd="@+id/rollButton"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/radioB_GreaterThan"
-            android:id="@+id/greaterThanRadioB"
-            android:layout_above="@+id/lessThanRadioB"
-            android:layout_alignLeft="@+id/lessThanRadioB"
-            android:layout_alignStart="@+id/lessThanRadioB"/>
-    </RadioGroup>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/diceResultListV"
+        android:scrollIndicators="right"
+        android:visibility="visible"
+        android:layout_below="@+id/discardButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
