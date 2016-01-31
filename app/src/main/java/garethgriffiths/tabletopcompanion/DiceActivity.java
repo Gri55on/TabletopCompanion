@@ -1,29 +1,24 @@
 package garethgriffiths.tabletopcompanion;
 
-import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class DiceActivity extends AppCompatActivity
@@ -47,23 +42,27 @@ public class DiceActivity extends AppCompatActivity
         final RadioButton rbGreater = (RadioButton) findViewById(R.id.greaterThanRadioB);
         final RadioButton rbLess = (RadioButton) findViewById(R.id.lessThanRadioB);
 
+
         //Edit boxes
         final EditText txtDiceType = (EditText) findViewById(R.id.diceTypeEdTxt);
         final EditText txtNumberDice = (EditText) findViewById(R.id.numDiceEdTxt);
-
+        final EditText txtFilterNum = (EditText) findViewById(R.id.filterNumEdTxt);
 
         //Buttons
         Button btnRoll = (Button) findViewById(R.id.rollButton);
         Button btnDiscard = (Button) findViewById(R.id.discardButton);
+        Button btnFilter = (Button)findViewById(R.id.filterButton);
 
         //Display Array
-        final List<Integer> diceList = new ArrayList<>(10);
-        //Array Adapter
-        LVDiceList = (ListView) findViewById(R.id.diceResultListV);
-        final ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, diceList);
-        //Set adapter
-        LVDiceList.setAdapter(adapter);
+        final List<Integer> diceList = new ArrayList<Integer>(10);
+        final List<Integer> oldDiceList = new ArrayList<Integer>();
 
+        //Array Adapter
+        final ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, diceList);
+
+        //Set adapter
+        LVDiceList = (ListView) findViewById(R.id.diceResultListV);
+        LVDiceList.setAdapter(adapter);
 
         //Roll the dice
         btnRoll.setOnClickListener(new View.OnClickListener()
@@ -77,38 +76,41 @@ public class DiceActivity extends AppCompatActivity
                 //Validation of fields
                 //If both fields >0
                 if (Integer.valueOf(txtDiceType.getText().toString()) > 0 && Integer.valueOf(txtNumberDice.getText().toString()) > 0)
-                    ;
                 {
+                    int number = Integer.valueOf(txtNumberDice.getText().toString());
+                    int sides = Integer.valueOf(txtDiceType.getText().toString());
+
                     //Populate array
-                    for (Integer i = 0; i < Integer.valueOf(txtNumberDice.getText().toString()); i++)
+                    for (int i = 0; i < number; i++)
                     {
-                        diceList.add(i, rollDice(Integer.valueOf(txtDiceType.getText().toString()), Integer.valueOf(txtNumberDice.getText().toString())).get(i));
+                        diceList.add(i, rollDice(sides));
                     }
                     //Update the list view
                     adapter.notifyDataSetChanged();
                 }
                 return;
+
             }
         });
 
         //Clear the list of results
         btnDiscard.setOnClickListener(new View.OnClickListener()
-         {
-             @Override
-             public void onClick(View v)
-             {
-                 diceList.clear();
-                 adapter.notifyDataSetChanged();
-             }
-          });
+        {
+            @Override
+            public void onClick(View v)
+            {
+                diceList.clear();
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-        //Radio Button Validation
+        //Radio Button Validation for filter
         rbGreater.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if(rbGreater.isChecked() == true)
+                if (rbGreater.isChecked() == true)
                 {
                     rbLess.setChecked(false);
                 }
@@ -119,14 +121,46 @@ public class DiceActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if(rbLess.isChecked() == true)
+                if (rbLess.isChecked() == true)
                 {
                     rbGreater.setChecked(false);
-                };
+                }
+                ;
             }
         });
 
+        btnFilter.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(rbGreater.isChecked())
+                {
+                    for (int i=0;i<diceList.size();i++)
+                    {
+                        if (diceList.get(i)< Integer.valueOf(txtFilterNum.getText().toString()))
+                        {
+                            diceList.remove(i);
+                            i-=1;
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
 
+                else if(rbLess.isChecked())
+                {
+                    for (int i=0;i<diceList.size();i++)
+                    {
+                        if (diceList.get(i)> Integer.valueOf(txtFilterNum.getText().toString()))
+                        {
+                            diceList.remove(i);
+                            i-=1;
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -134,20 +168,18 @@ public class DiceActivity extends AppCompatActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    //Returns a list of rolled dice results
-    private List<Integer> rollDice(int chance, int amount)
+
+    //Returns a int of rolled dice result
+    private int rollDice(int chance)
     {
-        final List<Integer> rollArray = new ArrayList<Integer>(amount);
         int result;
         //Gives a random number between 1 and X,Y number of times
         {
-
             //BASE Equation||Min + (int)(Math.random() * ((Max - Min) + 1))
             //1 = minimum roll
             result = 1 + (int) (Math.random() * ((chance - 1) + 1));
-            rollArray.add(result);
         }
-        return rollArray;
+        return result;
     }
 
     @Override
