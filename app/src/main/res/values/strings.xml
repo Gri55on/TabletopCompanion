@@ -31,5 +31,6 @@
     <string name="button_Reset">Reset</string>
     <string name="button_Discard">Discard</string>
     <string name="button_Filter">Filter</string>
+    <string name="button_ReRoll">Re Roll</string>
 
 </resources>

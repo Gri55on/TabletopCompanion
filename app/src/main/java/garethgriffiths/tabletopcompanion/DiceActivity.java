@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -16,7 +15,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +27,31 @@ public class DiceActivity extends AppCompatActivity
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
+    int diceType = 0;
+    int diceNumber = 0;
+
+    private void setType(int type)
+    {
+        diceType = type;
+    }
+
+    private int getType()
+    {
+        return diceType;
+    }
+
+    private void setNumber(int number)
+    {
+        diceNumber = number;
+    }
+
+    private int getNumber()
+    {
+        return diceNumber;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,10 +75,10 @@ public class DiceActivity extends AppCompatActivity
         Button btnRoll = (Button) findViewById(R.id.rollButton);
         Button btnDiscard = (Button) findViewById(R.id.discardButton);
         Button btnFilter = (Button)findViewById(R.id.filterButton);
+        Button btnReRoll = (Button) findViewById(R.id.reRollButton);
 
         //Display Array
         final List<Integer> diceList = new ArrayList<Integer>(10);
-        final List<Integer> oldDiceList = new ArrayList<Integer>();
 
         //Array Adapter
         final ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, diceList);
@@ -80,6 +103,9 @@ public class DiceActivity extends AppCompatActivity
                     int number = Integer.valueOf(txtNumberDice.getText().toString());
                     int sides = Integer.valueOf(txtDiceType.getText().toString());
 
+                    setNumber(number);
+                    setType(sides);
+
                     //Populate array
                     for (int i = 0; i < number; i++)
                     {
@@ -99,6 +125,7 @@ public class DiceActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utils.hideKeyboard(DiceActivity.this);
                 diceList.clear();
                 adapter.notifyDataSetChanged();
             }
@@ -134,6 +161,8 @@ public class DiceActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Utils.hideKeyboard(DiceActivity.this);
+
                 if(rbGreater.isChecked())
                 {
                     for (int i=0;i<diceList.size();i++)
@@ -162,12 +191,28 @@ public class DiceActivity extends AppCompatActivity
             }
         });
 
+        btnReRoll.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int numReRoll = diceList.size();
+                adapter.notifyDataSetChanged();
+
+                diceList.clear();
+                for (int i = 0; i < numReRoll; i++)
+                {
+                    diceList.add(i, rollDice(getType()));
+                }
+
+            }
+        });
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
 
     //Returns a int of rolled dice result
     private int rollDice(int chance)
@@ -181,6 +226,8 @@ public class DiceActivity extends AppCompatActivity
         }
         return result;
     }
+
+
 
     @Override
     public void onStart()
