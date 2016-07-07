@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
         Button btnBoop = (Button)findViewById(R.id.boopButton);
         Button btnDice = (Button)findViewById(R.id.diceButton);
         Button btnClose = (Button)findViewById(R.id.closeButton);
+        Button btnMeasure = (Button)findViewById(R.id.measureButton);
 
         btnBoop.setOnClickListener(new View.OnClickListener()
         {
@@ -41,7 +42,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this,DiceActivity.class);
+                Intent intent = new Intent(MainActivity.this, DiceActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnMeasure.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this, MeasureActivity.class);
                 startActivity(intent);
             }
         });
