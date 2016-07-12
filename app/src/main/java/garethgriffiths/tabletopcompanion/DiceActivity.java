@@ -1,6 +1,5 @@
 package garethgriffiths.tabletopcompanion;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +10,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +17,6 @@ import java.util.List;
 public class DiceActivity extends AppCompatActivity
 {
     ListView LVDiceList;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     int diceType = 0;
     int diceNumber = 0;
@@ -156,6 +146,7 @@ public class DiceActivity extends AppCompatActivity
             }
         });
 
+        //Filters table removing results either greater or less than X
         btnFilter.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -191,6 +182,7 @@ public class DiceActivity extends AppCompatActivity
             }
         });
 
+        //For the number of results in the table, roll again
         btnReRoll.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -207,68 +199,19 @@ public class DiceActivity extends AppCompatActivity
 
             }
         });
-
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    //Returns a int of rolled dice result
+    //Returns a (int)result for the dice size given
     private int rollDice(int chance)
     {
         int result;
-        //Gives a random number between 1 and X,Y number of times
+        //Gives a random number between 1 and X.
         {
             //BASE Equation||Min + (int)(Math.random() * ((Max - Min) + 1))
             //1 = minimum roll
             result = 1 + (int) (Math.random() * ((chance - 1) + 1));
         }
         return result;
-    }
-
-
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Dice Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://garethgriffiths.tabletopcompanion/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop()
-    {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Dice Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://garethgriffiths.tabletopcompanion/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 }
 

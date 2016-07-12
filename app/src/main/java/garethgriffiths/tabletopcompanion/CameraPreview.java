@@ -12,9 +12,10 @@ package garethgriffiths.tabletopcompanion;
         private SurfaceHolder mHolder;
         private Camera mCamera;
 
+        //Create an instance of itself
         public CameraPreview(Context context)
         {
-            super(context); // Always necessary
+            super(context);
             mHolder = getHolder();
             mHolder.addCallback(this);
             mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -23,12 +24,13 @@ package garethgriffiths.tabletopcompanion;
         @Override
         public void surfaceCreated(SurfaceHolder holder)
         {
+            //If camera not in use open camera
             if (null == mCamera)
             {
                 mCamera = Camera.open();
             }
-
-            try {
+            try//Try to display camera preview in designated holder
+            {
                 mCamera.setPreviewDisplay(mHolder);
                 mCamera.startPreview();
             } catch (IOException e)
@@ -38,11 +40,13 @@ package garethgriffiths.tabletopcompanion;
             }
         }
 
+        //When surface changes perform action
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
         {
 
         }
+
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder)
@@ -51,6 +55,9 @@ package garethgriffiths.tabletopcompanion;
             {
                 return;
             }
+
+            //SUPER IMPORTANT!
+            //Release camera if in use so other applications can use it
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;

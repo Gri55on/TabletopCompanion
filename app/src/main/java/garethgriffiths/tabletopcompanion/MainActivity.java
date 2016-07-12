@@ -11,23 +11,25 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+
+//Main menu activity
 public class MainActivity extends AppCompatActivity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         final TextView txtTitle = (TextView)findViewById(R.id.titleText);
+
         //Buttons
         Button btnBoop = (Button)findViewById(R.id.boopButton);
         Button btnDice = (Button)findViewById(R.id.diceButton);
         Button btnClose = (Button)findViewById(R.id.closeButton);
         Button btnMeasure = (Button)findViewById(R.id.measureButton);
 
+        //test button
         btnBoop.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //Open dice activity
         btnDice.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //Open measure activity
         btnMeasure.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //"Closes" the program as per mobile development logic (not a force close)
+        //Allows for android to dictate when to close
         btnClose.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -65,8 +71,5 @@ public class MainActivity extends AppCompatActivity
                 finish();
             }
         });
-
-
     }
-
 }
